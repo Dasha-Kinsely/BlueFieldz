@@ -1,10 +1,11 @@
 package main
 
 import (
-	"bluefieldz/loggers"
 	"log"
 
-	"bluefieldz/databases"
+	"github.com/Dasha-Kinsely/leaveswears/loggers"
+
+	"github.com/Dasha-Kinsely/leaveswears/databases"
 
 	"github.com/gin-gonic/gin"
 )

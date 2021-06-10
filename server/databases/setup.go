@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/Dasha-Kinsely/leaveswears/models/tests/pingTest"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -46,5 +47,6 @@ func InitDB() *gorm.DB {
 
 func SetUp() {
 	InitDB()
-	DB.AutoMigrate(&Ping{})
+
+	DB.AutoMigrate(&pingTest.Ping{})
 }
