@@ -1,0 +1,11 @@
+/*func HTTPLoggerHelper() string {
+		return fmt.Sprintf(
+			">>> CLIENT: %s returned %d at [%s] \n PATH: %s using %s with [%s] \n",
+			param.ClientIP,
+			param.StatusCode,
+			param.TimeStamp.Format(time.RFC822),
+			param.Path,
+			param.Method,
+			param.Latency.Format(time.RFC822)
+		)
+}*/
