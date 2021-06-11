@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"github.com/Dasha-Kinsely/leaveswears/loggers"
+	"github.com/Dasha-Kinsely/leaveswears/server/loggers"
 
-	"github.com/Dasha-Kinsely/leaveswears/databases"
+	"github.com/Dasha-Kinsely/leaveswears/server/databases"
 
 	"github.com/gin-gonic/gin"
 )
