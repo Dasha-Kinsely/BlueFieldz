@@ -1,5 +1,5 @@
 package routers
 
 func initializeRoutes() {
-
+	
 }
