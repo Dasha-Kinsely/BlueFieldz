@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/Dasha-Kinsely/leaveswears/models/tests/pingTest"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -40,11 +41,5 @@ func InitDB() *gorm.DB {
 	if err != nil {
 		panic("Error initializing MYSQL_DB...")
 	}
-	DB = db
-	return DB
-}
-
-func SetUp() {
-	InitDB()
-	DB.AutoMigrate(&Ping{})
+	return db
 }

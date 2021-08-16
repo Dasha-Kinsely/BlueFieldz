@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 
-	"loggers"
+	"github.com/Dasha-Kinsely/leaveswears/server/loggers"
 
-	"databases"
+	"github.com/Dasha-Kinsely/leaveswears/server/databases"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,7 +25,12 @@ func init() {
 		log.Printf(">>> Error Loggers creation unsuccessful...\n")
 	}
 	// Initialize Database
-	databases.SetUp()
+	db, err := databases.InitDB()
+	if err != nil{
+		log.Printf(">>> Failed to initialize Databases")
+	} else {
+		defer db.Close()
+	}
 }
 
 func main() {
