@@ -41,12 +41,5 @@ func InitDB() *gorm.DB {
 	if err != nil {
 		panic("Error initializing MYSQL_DB...")
 	}
-	DB = db
-	return DB
-}
-
-func SetUp() {
-	InitDB()
-
-	DB.AutoMigrate(&pingTest.Ping{})
+	return db
 }

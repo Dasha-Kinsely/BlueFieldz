@@ -25,7 +25,12 @@ func init() {
 		log.Printf(">>> Error Loggers creation unsuccessful...\n")
 	}
 	// Initialize Database
-	databases.SetUp()
+	db, err := databases.InitDB()
+	if err != nil{
+		log.Printf(">>> Failed to initialize Databases")
+	} else {
+		defer db.Close()
+	}
 }
 
 func main() {
