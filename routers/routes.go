@@ -2,11 +2,9 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	//"productRoutes"
-	"userRoutes"
 )
 
-func initializeRoutes(r *gin.Engine) {
+func InitializeRoutes(r *gin.Engine) {
 	base := r.Group("/api")
-	userRoutes.UsersMaster(base.Group("/users"))
+	UsersMaster(base.Group("/users"))
 }

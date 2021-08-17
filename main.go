@@ -1,12 +1,12 @@
 package main
 
 import (
-	"log"
-	//"github.com/Dasha-Kinsely/leaveswears/loggers"
+	//"log"
+	//"github.com/Dasha-Kinsely/leaveswears/helpers/loggers"
 	"github.com/Dasha-Kinsely/leaveswears/databases"
+	"github.com/Dasha-Kinsely/leaveswears/databases/migrations"
 	"github.com/Dasha-Kinsely/leaveswears/routers"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 var r *gin.Engine
@@ -24,13 +24,13 @@ func init() {
 	// Initialize Database
 	databases.InitDB()
 	db := databases.GetDB()
-	databases.FirstMigration(db)
+	migrations.FirstMigration(db)
 }
 
 func main() {
 	// gin Defaults
 	r = gin.Default()
-	routers.initializeRoutes(r)
+	routers.InitializeRoutes(r)
 	
 	r.Run()
 }
