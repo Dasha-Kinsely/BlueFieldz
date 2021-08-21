@@ -19,5 +19,5 @@ func UsersSignUpControllers(c *gin.Context){
 		errorresponders.ContextJSON(c, "database saving")
 		return
 	}
-	c.Set("signing_up", newUser.ComparedTo)
+	c.Set("signing_up", newUser.ComparedTo).Response()
 }
