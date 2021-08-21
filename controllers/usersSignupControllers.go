@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"net/http"
+
+	"github.com/Dasha-Kinsely/leaveswears/controllers/serializers"
 	"github.com/Dasha-Kinsely/leaveswears/helpers/errorresponders"
 	"github.com/Dasha-Kinsely/leaveswears/helpers/validators"
 	"github.com/Dasha-Kinsely/leaveswears/models"
@@ -19,5 +22,7 @@ func UsersSignUpControllers(c *gin.Context){
 		errorresponders.ContextJSON(c, "database saving")
 		return
 	}
-	c.Set("signing_up", newUser.ComparedTo).Response()
+	c.Set("signing_up", newUser.ComparedTo)
+	serializer := serializers.SignupSuccessSerializer{c}
+	c.JSON(http.StatusAccepted, gin.H{"registered": serializer.Response()})
 }

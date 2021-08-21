@@ -8,7 +8,7 @@ import (
 
 func GenerateJWTTokenDefault(uid uint) string {
 	newToken := jwt.New(jwt.GetSigningMethod("HS256"))
-	newToken.Claim= jwt.MapClaims{
+	newToken.Claims = jwt.MapClaims{
 		"id": uid,
 		"exp": time.Now().Add(time.Hour * 72).Unix(),
 	}

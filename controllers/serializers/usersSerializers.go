@@ -2,8 +2,13 @@ package serializers
 
 import (
 	"github.com/Dasha-Kinsely/leaveswears/helpers/processes"
+	"github.com/Dasha-Kinsely/leaveswears/models"
 	"github.com/gin-gonic/gin"
 )
+
+type SignupSuccessSerializer struct {
+	c *gin.Context
+}
 
 type SignupSuccessResponse struct {
 	Username string `json:"username"`
@@ -11,8 +16,8 @@ type SignupSuccessResponse struct {
 	Token string `json:"token"`
 }
 
-func (c *gin.Context) Response() SignupSuccessResponse {
-	responseModel := c.MustGet("signing_up")
+func (self *SignupSuccessSerializer) Response() SignupSuccessResponse {
+	responseModel := self.c.MustGet("signing_up").(models.User)
 	return SignupSuccessResponse{
 		Username: responseModel.Username,
 		Email: responseModel.Email,
