@@ -22,7 +22,11 @@ func UsersSignUpControllers(c *gin.Context){
 		errorresponders.ContextJSON(c, "database saving")
 		return
 	}
-	c.Set("signing_up", newUser.ComparedTo)
-	serializer := serializers.SignupSuccessSerializer{c}
+	serializer := serializers.SignupSuccessSerializer{
+		Username: newUser.ComparedTo.Username,
+		Email: newUser.ComparedTo.Email,
+		ID: newUser.ComparedTo.ID,
+	}
+	c.Set("registered_user", serializer)
 	c.JSON(http.StatusAccepted, gin.H{"registered": serializer.Response()})
 }

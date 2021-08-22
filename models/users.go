@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/Dasha-Kinsely/leaveswears/databases"
+	"github.com/Dasha-Kinsely/leaveswears/models/databases"
 	"gorm.io/gorm"
 )
 

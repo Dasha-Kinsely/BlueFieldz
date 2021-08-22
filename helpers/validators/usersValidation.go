@@ -1,8 +1,6 @@
 package validators
 
 import (
-	"log"
-
 	"github.com/Dasha-Kinsely/leaveswears/helpers/processes"
 	"github.com/Dasha-Kinsely/leaveswears/models"
 	"github.com/gin-gonic/gin"
@@ -29,7 +27,6 @@ func (m *UserSignupValidator) BindContext(c *gin.Context) error {
 	headerMethod := c.Request.Method
 	headContentType := c.ContentType()
 	if err:=c.ShouldBindWith(m, binding.Default(headerMethod, headContentType)); err != nil {
-		log.Println(err)
 		return err
 	}
 	m.ComparedTo.Username = m.User.Username
@@ -70,7 +67,6 @@ func (m *UserEmailSigninValidator) BindContext(c *gin.Context) error {
 	headerMethod := c.Request.Method
 	headContentType := c.ContentType()
 	if err:=c.ShouldBindWith(m, binding.Default(headerMethod, headContentType)); err != nil {
-		log.Println(err)
 		return err
 	}
 	m.fetchModel.Email = m.User.Email
@@ -82,7 +78,6 @@ func (m *UserUsernameSigninValidator) BindContext(c *gin.Context) error {
 	headerMethod := c.Request.Method
 	headContentType := c.ContentType()
 	if err:=c.ShouldBindWith(m, binding.Default(headerMethod, headContentType)); err != nil {
-		log.Println(err)
 		return err
 	}
 	m.fetchModel.Username = m.User.Username

@@ -3,8 +3,8 @@ package main
 import (
 	//"log"
 	//"github.com/Dasha-Kinsely/leaveswears/helpers/loggers"
-	"github.com/Dasha-Kinsely/leaveswears/databases"
-	"github.com/Dasha-Kinsely/leaveswears/databases/migrations"
+	"github.com/Dasha-Kinsely/leaveswears/models/databases"
+	"github.com/Dasha-Kinsely/leaveswears/models/databases/migrations"
 	"github.com/Dasha-Kinsely/leaveswears/routers"
 	"github.com/gin-gonic/gin"
 )

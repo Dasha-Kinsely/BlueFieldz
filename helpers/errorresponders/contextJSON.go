@@ -16,6 +16,10 @@ func ContextJSON(c *gin.Context, msg string) {
 		c.JSON(http.StatusForbidden, "User does not exist!")
 	case "incorrect password":
 		c.JSON(http.StatusForbidden, "Invalid password!")
+	case "illegal query":
+		c.JSON(http.StatusBadRequest, "Must use either email or username to authenticate!")
+	case "unauthorized":
+		c.JSON(http.StatusUnauthorized, "you must first login in order to perform this action!")
 	default:
 		c.JSON(http.StatusNotImplemented, "Unknown error occurred at server side!")
 	}

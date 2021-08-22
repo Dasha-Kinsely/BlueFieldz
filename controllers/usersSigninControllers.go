@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/Dasha-Kinsely/leaveswears/controllers/middlewares"
 	"github.com/Dasha-Kinsely/leaveswears/helpers/errorresponders"
 	"github.com/Dasha-Kinsely/leaveswears/helpers/processes"
 	"github.com/Dasha-Kinsely/leaveswears/helpers/validators"
@@ -11,7 +12,7 @@ import (
 )
 
 func UsersSigninControllers(c *gin.Context){
-	if len(c.PostForm("email")) < 1 {
+	if len(c.PostForm("email")) < 1 && len(c.PostForm("username")) != 0 {
 		// Checks whether the form's data format matches model (sign in via username)
 		currentUser := validators.NewUserUsernameSigninValidator()
 		if err := currentUser.BindContext(c); err != nil {
@@ -29,9 +30,9 @@ func UsersSigninControllers(c *gin.Context){
 			c.JSON(http.StatusForbidden, "wrong password!")
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"user": currentUser.User.Username})
-		return
-	} else if len(c.PostForm("username")) < 1 {
+		// Update Context and Serialize Result as Response
+		middlewares.UpdateContextAuthUser(c, "username", fetchedUser.Username)
+	} else if len(c.PostForm("username")) < 1 && len(c.PostForm("email")) != 0 {
 		// Checks whether the form's data format matches model (sign in via email)
 		currentUser := validators.NewUserEmailSigninValidator()
 		if err := currentUser.BindContext(c); err != nil {
@@ -49,7 +50,10 @@ func UsersSigninControllers(c *gin.Context){
 			c.JSON(http.StatusForbidden, "wrong password!")
 			return
 		}
-		c.JSON(http.StatusOK, gin.H{"user": currentUser.User.Email})
+		// Update Context and Serialize Result as Response
+		middlewares.UpdateContextAuthUser(c, "email", fetchedUser.Email)
+	} else {
+		errorresponders.ContextJSON(c, "illegal query")
 		return
 	}
 }
