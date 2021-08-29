@@ -3,6 +3,7 @@ module github.com/Dasha-Kinsely/leaveswears
 go 1.15
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/gin-gonic/gin v1.7.4
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/joho/godotenv v1.3.0

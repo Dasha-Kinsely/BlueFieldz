@@ -1,16 +1,13 @@
 package serializers
 
 import (
+	"time"
+
 	"github.com/Dasha-Kinsely/leaveswears/helpers/processes"
+	"github.com/Dasha-Kinsely/leaveswears/models"
 )
 
-// --------------------- Serializers for Signup ----------------------------------
-
-type SignupSuccessSerializer struct {
-	Username string
-	Email string
-	ID uint	
-}
+// --------------------- Signup ----------------------------------
 
 type SignupSuccessResponse struct {
 	Username string `json:"username"`
@@ -18,32 +15,25 @@ type SignupSuccessResponse struct {
 	Token string `json:"token"`
 }
 
-func (serializer *SignupSuccessSerializer) Response() SignupSuccessResponse {
+func (serializer *UniversalSerializer) SignupSuccessResponse() SignupSuccessResponse {
+	res := serializer.C.MustGet("registered_user").(models.User)
 	return SignupSuccessResponse{
-		Username: serializer.Username,
-		Email: serializer.Email,
-		Token: processes.GenerateJWTTokenDefault(serializer.ID),
+		Username: res.Username,
+		Email: res.Email,
+		Token: processes.GenerateJWTTokenDefault(res.ID),
 	}
 }
 
-// -----------------------------------------------------------------------------
-
-type SigninSuccessSerializer struct {
-	Username string
-	Email string
-	ID uint
-}
-
+// ------------------------ Signin -------------------------------------
 type SigninSuccessResponse struct {
-	Username string `json:"username"`
-	Email string `json:"email"`
 	ID uint `json:"id"`
+	SigninTime time.Time
 }
 
-func (serializer *SigninSuccessSerializer) Response() SigninSuccessResponse {
+func (serializer *UniversalSerializer) SigninSuccessResponse() SigninSuccessResponse {
+	res := serializer.C.MustGet("auth_user").(models.User)
 	return SigninSuccessResponse{
-		Username: serializer.Username,
-		Email: serializer.Email,
-		ID: serializer.ID,
+		ID: res.ID,
+		SigninTime: time.Now(),
 	}
 }

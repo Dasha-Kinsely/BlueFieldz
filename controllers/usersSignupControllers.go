@@ -18,15 +18,11 @@ func UsersSignUpControllers(c *gin.Context){
 		return
 	}
 	// Validation process to ensure nothing happened during the actual dao processes
-	if err := models.SaveOneUser(&newUser.ComparedTo); err != nil {
+	if err := models.SaveOneUser(&newUser.ValidatedNewUser); err != nil {
 		errorresponders.ContextJSON(c, "database saving")
 		return
 	}
-	serializer := serializers.SignupSuccessSerializer{
-		Username: newUser.ComparedTo.Username,
-		Email: newUser.ComparedTo.Email,
-		ID: newUser.ComparedTo.ID,
-	}
-	c.Set("registered_user", serializer)
-	c.JSON(http.StatusAccepted, gin.H{"registered": serializer.Response()})
+	c.Set("registered_user", newUser.ValidatedNewUser)
+	serializer := serializers.UniversalSerializer{c}
+	c.JSON(http.StatusAccepted, gin.H{"registered": serializer.SignupSuccessResponse()})
 }

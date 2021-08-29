@@ -24,7 +24,7 @@ func SaveOneUser(data interface{}) error {
 func FindOneUser(fetchCondition interface{}) (User, error) {
 	db := databases.GetDB()
 	var user User
-	err := db.Where(fetchCondition).First(&user).Error
+	err := db.First(&user, fetchCondition).Error
 	return user, err
 }
 //--------------------------------------------------------

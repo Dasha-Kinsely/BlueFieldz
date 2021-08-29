@@ -8,19 +8,14 @@ import (
 )
 
 func UsersChangeAuthenticationInfoControllers(c *gin.Context){
-	/*parsedIdentifier := c.Param("identifier")
-	if parsedIdentifier == "" {
-		errorresponders.ContextJSON(c, "form format")
-		return
-	}*/
+	// Get from form the fields you wish to change
 	parsedField := c.Param("field")
-	log.Println(parsedField)
 	if parsedField == "" {
 		errorresponders.ContextJSON(c, "form format")
 		return
 	}
 	fetchedUser, exists := c.Get("auth_user")
-	log.Println(fetchedUser)
+	log.Println("Fetched this guy:", fetchedUser)
 	if exists != true {
 		errorresponders.ContextJSON(c, "unauthorized")
 		return
