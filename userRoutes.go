@@ -1,4 +1,4 @@
-package routers
+package main
 
 import (
 	"github.com/Dasha-Kinsely/leaveswears/controllers"

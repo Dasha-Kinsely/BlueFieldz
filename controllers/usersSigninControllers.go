@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"net/http"
+
+	"github.com/Dasha-Kinsely/leaveswears/controllers/serializers"
 	"github.com/Dasha-Kinsely/leaveswears/helpers/errorresponders"
 	"github.com/Dasha-Kinsely/leaveswears/helpers/middlewares"
 	"github.com/Dasha-Kinsely/leaveswears/helpers/processes"
@@ -9,6 +12,7 @@ import (
 )
 
 func UsersSigninControllers(c *gin.Context){
+	// Checks whether this is a signin using email or using username
 	var identifier, option string
 	if len(c.PostForm("email")) < 1 && len(c.PostForm("username")) != 0 {
 		identifier = c.PostForm("username")
@@ -20,7 +24,7 @@ func UsersSigninControllers(c *gin.Context){
 		errorresponders.ContextJSON(c, "illegal query")
 		return
 	}
-	// Checks if user exists, condition creates a custom type struct
+	// Checks if user exists, condition creates a temporary custom type struct
 	fetchCondition := []byte("{\""+option+"\":\""+identifier+"\"}")
 	condition := processes.CustomTypeStruct(fetchCondition)
 	fetchedUser, err := models.FindOneUser(*condition)
@@ -33,6 +37,8 @@ func UsersSigninControllers(c *gin.Context){
 		errorresponders.ContextJSON(c, "wrong password")
 		return
 	}
-	// Update Context and Serialize Result as Response
+	// Update *gin.Context and serialize result as response
 	middlewares.UpdateContextAuthUser(c, fetchedUser)
+	serializer := serializers.UniversalSerializer{C: c}
+	c.JSON(http.StatusAccepted, gin.H{"authenticated_user":serializer.SigninSuccessResponse()})
 }

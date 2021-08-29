@@ -23,6 +23,6 @@ func UsersSignUpControllers(c *gin.Context){
 		return
 	}
 	c.Set("registered_user", newUser.ValidatedNewUser)
-	serializer := serializers.UniversalSerializer{c}
+	serializer := serializers.UniversalSerializer{C: c}
 	c.JSON(http.StatusAccepted, gin.H{"registered": serializer.SignupSuccessResponse()})
 }

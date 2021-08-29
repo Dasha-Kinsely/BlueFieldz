@@ -15,7 +15,12 @@ func UsersChangeAuthenticationInfoControllers(c *gin.Context){
 		return
 	}
 	fetchedUser, exists := c.Get("auth_user")
-	log.Println("Fetched this guy:", fetchedUser)
+	fetchedClaim, yes := c.Get("claims")
+	log.Println("Fetched this guy: ", fetchedUser)
+	log.Println("with claims: ", fetchedClaim)
+	if yes != true {
+		errorresponders.ContextJSON(c, "unauthorized")
+	}
 	if exists != true {
 		errorresponders.ContextJSON(c, "unauthorized")
 		return

@@ -1,7 +1,7 @@
 package databases
 
 import (
-	"log"
+	//"log"
 	"os"
 	"strconv"
 
@@ -21,7 +21,7 @@ func InitDB() {
 	// Loading .env and parse variables required
 	err := godotenv.Load()
 	if err != nil {
-		log.Println("Error loading .env file...")
+		// log.Println("Error loading .env file...")
 		panic("Error loading .env file...")
 	}
 	dsn := os.Getenv("MYSQL_DSN")
@@ -39,7 +39,7 @@ func InitDB() {
 		SkipInitializeWithVersion: skipInitializeWithVersion,
 	}), &gorm.Config{})
 	if dbErr != nil {
-		log.Println("Error initializing MYSQL_DB...")
+		// log.Println("Error initializing MYSQL_DB...")
 		panic("Error initializing MYSQL_DB...")
 	}
 	DB = db

@@ -3,7 +3,7 @@ package serializers
 import (
 	"time"
 
-	"github.com/Dasha-Kinsely/leaveswears/helpers/processes"
+	"github.com/Dasha-Kinsely/leaveswears/helpers/middlewares"
 	"github.com/Dasha-Kinsely/leaveswears/models"
 )
 
@@ -20,7 +20,7 @@ func (serializer *UniversalSerializer) SignupSuccessResponse() SignupSuccessResp
 	return SignupSuccessResponse{
 		Username: res.Username,
 		Email: res.Email,
-		Token: processes.GenerateJWTTokenDefault(res.ID),
+		Token: middlewares.GenerateJWTTokenDefault(res.ID),
 	}
 }
 
@@ -28,6 +28,7 @@ func (serializer *UniversalSerializer) SignupSuccessResponse() SignupSuccessResp
 type SigninSuccessResponse struct {
 	ID uint `json:"id"`
 	SigninTime time.Time
+	Token string `json:"token"`
 }
 
 func (serializer *UniversalSerializer) SigninSuccessResponse() SigninSuccessResponse {
@@ -35,5 +36,6 @@ func (serializer *UniversalSerializer) SigninSuccessResponse() SigninSuccessResp
 	return SigninSuccessResponse{
 		ID: res.ID,
 		SigninTime: time.Now(),
+		Token: middlewares.GenerateJWTTokenDefault(res.ID),
 	}
 }
