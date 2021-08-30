@@ -12,7 +12,6 @@ import (
 type SignupSuccessResponse struct {
 	Username string `json:"username"`
 	Email string `json:"email"`
-	Token string `json:"token"`
 }
 
 func (serializer *UniversalSerializer) SignupSuccessResponse() SignupSuccessResponse {
@@ -20,13 +19,13 @@ func (serializer *UniversalSerializer) SignupSuccessResponse() SignupSuccessResp
 	return SignupSuccessResponse{
 		Username: res.Username,
 		Email: res.Email,
-		Token: middlewares.GenerateJWTTokenDefault(res.ID),
 	}
 }
 
 // ------------------------ Signin -------------------------------------
 type SigninSuccessResponse struct {
 	ID uint `json:"id"`
+	Username string `json:"username"`
 	SigninTime time.Time
 	Token string `json:"token"`
 }
@@ -35,7 +34,8 @@ func (serializer *UniversalSerializer) SigninSuccessResponse() SigninSuccessResp
 	res := serializer.C.MustGet("auth_user").(models.User)
 	return SigninSuccessResponse{
 		ID: res.ID,
+		Username: res.Username,
 		SigninTime: time.Now(),
-		Token: middlewares.GenerateJWTTokenDefault(res.ID),
+		Token: middlewares.GenerateJWTTokenDefault(res.ID, res.Username),
 	}
 }

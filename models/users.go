@@ -27,5 +27,11 @@ func FindOneUser(fetchCondition interface{}) (User, error) {
 	err := db.First(&user, fetchCondition).Error
 	return user, err
 }
+
+func (m *User) UpdateOneUser(data interface{}) error {
+	db := databases.GetDB()
+	err := db.Model(&m).Updates(data).Error
+	return err
+}
 //--------------------------------------------------------
 

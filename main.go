@@ -1,10 +1,11 @@
 package main
 
 import (
-	//"log"
+
 	//"github.com/Dasha-Kinsely/leaveswears/helpers/loggers"
 	"github.com/Dasha-Kinsely/leaveswears/models/databases"
 	"github.com/Dasha-Kinsely/leaveswears/models/databases/migrations"
+	"github.com/Dasha-Kinsely/leaveswears/routers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,14 +27,9 @@ func init() {
 	migrations.FirstMigration(db)
 }
 
-func InitializeRoutes(r *gin.Engine) {
-	base := r.Group("/api")
-	UsersMaster(base.Group("/users"))
-}
-
 func main() {
 	// gin Defaults
 	r = gin.Default()
-	InitializeRoutes(r)
+	routers.InitializeRoutes(r)
 	r.Run()
 }
