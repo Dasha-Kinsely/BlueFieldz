@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/joho/godotenv"
+	"github.com/Dasha-Kinsely/leaveswears/helpers/processes"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -18,17 +18,15 @@ var DB *gorm.DB
 
 // This is only necessary for the first initialization on server start up
 func InitDB() {
-	// Loading .env and parse variables required
-	err := godotenv.Load()
-	if err != nil {
-		// log.Println("Error loading .env file...")
-		panic("Error loading .env file...")
-	}
+	processes.LoadEnv()
 	dsn := os.Getenv("MYSQL_DSN")
 	disableDatetimePrecision, err := strconv.ParseBool(os.Getenv("MYSQL_DISABLE_DATETIME_PRECISION"))
 	dontSupportRenameIndex, err := strconv.ParseBool(os.Getenv("MYSQL_DONT_SUPPORT_RENAME_INDEX"))
 	dontSupportRenameColumn, err := strconv.ParseBool(os.Getenv("MYSQL_DONT_SUPPORT_RENAME_COLUMN"))
 	skipInitializeWithVersion, err := strconv.ParseBool(os.Getenv("MYSQL_SKIP_INITIALIZE_WITH_VERSION"))
+	if err != nil {
+		panic(err)
+	}
 	// Database connection configuration but returns nothing
 	db, dbErr := gorm.Open(mysql.New(mysql.Config{
 		DSN:                       dsn,

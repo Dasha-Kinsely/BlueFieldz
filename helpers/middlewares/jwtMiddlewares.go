@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var SignitureKey string = processes.LoadEnv("getting signiture key", "JWT_SIGNITURE_KEY")
+var SignitureKey string = processes.EnvString("getting signiture key", "JWT_SIGNITURE_KEY")
 
 type JwtBase struct {
 	JwtSigniture []byte

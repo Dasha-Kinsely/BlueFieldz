@@ -28,7 +28,6 @@ func UpdateProfileInfo(c *gin.Context){
 func UsersRoutes(router *gin.RouterGroup) {
 	router.POST("/signup", UsersSignup)
 	router.POST("/signin", UsersSignin)
-	router.PUT("/signin", UsersSignin)
 	// Auth required routes
 	router.Use(middlewares.JWTAuthMiddleware(true))
 	{
