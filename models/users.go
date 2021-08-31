@@ -15,10 +15,17 @@ type User struct {
 }
 
 // D.A.O. plus Default Triggered Functions for User Model
-func SaveOneUser(data interface{}) error {
+func SaveOneUser(data interface{}, u string) error {
 	db := databases.GetDB()
-	err := db.Save(data).Error
-	return err
+	if err := db.Save(data).Error; err != nil {
+		return err
+	}
+	// Saving into Database will automatically generate a profile with only gorm.Model and Username
+	linkedProfile := Profile{Name:u}
+	if err := db.Table("profiles").Create(&linkedProfile).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
 func FindOneUser(fetchCondition interface{}) (User, error) {

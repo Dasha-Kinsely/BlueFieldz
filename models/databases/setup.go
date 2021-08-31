@@ -37,7 +37,9 @@ func InitDB() {
 		DontSupportRenameIndex:    dontSupportRenameIndex,
 		DontSupportRenameColumn:   dontSupportRenameColumn,
 		SkipInitializeWithVersion: skipInitializeWithVersion,
-	}), &gorm.Config{})
+	}), &gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+	})
 	if dbErr != nil {
 		// log.Println("Error initializing MYSQL_DB...")
 		panic("Error initializing MYSQL_DB...")

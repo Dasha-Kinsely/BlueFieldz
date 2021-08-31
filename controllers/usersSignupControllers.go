@@ -18,7 +18,7 @@ func UsersSignUpControllers(c *gin.Context){
 		return
 	}
 	// Validation process to ensure nothing happened during the actual dao processes
-	if err := models.SaveOneUser(&newUser.ValidatedNewUser); err != nil {
+	if err := models.SaveOneUser(&newUser.ValidatedNewUser, newUser.ValidatedNewUser.Username); err != nil {
 		errorresponders.ContextJSON(c, "database saving")
 		return
 	}

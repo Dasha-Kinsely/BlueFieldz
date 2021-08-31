@@ -1,11 +1,10 @@
 package main
 
 import (
-
+	"github.com/Dasha-Kinsely/leaveswears/routers"
 	//"github.com/Dasha-Kinsely/leaveswears/helpers/loggers"
 	"github.com/Dasha-Kinsely/leaveswears/models/databases"
 	"github.com/Dasha-Kinsely/leaveswears/models/databases/migrations"
-	"github.com/Dasha-Kinsely/leaveswears/routers"
 	"github.com/gin-gonic/gin"
 )
 

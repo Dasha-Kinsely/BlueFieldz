@@ -1,41 +1,28 @@
 package models
 
-import "gorm.io/gorm"
-
-type ColorEnum int
-const (
-	Black ColorEnum = iota+1
-	Grey
-	White
-	Green
-	Blue
-	Red
-	Orange
-	Yellow
-	Purple
+import (
+	"github.com/Dasha-Kinsely/leaveswears/models/databases"
+	"gorm.io/gorm"
 )
-func (color ColorEnum) ToString() string {
-	return [...]string{"Black", "Grey", "White", "Green", "Blue", "Red", "Orange", "Yellow", "Purple"}[color-1]
-}
 
-type MaterialEnum int
+type GenderEnum int8
 const (
-	Leather MaterialEnum=iota+1
-	Cotton
-	Nylon
-	Polyester
-	Silk
-	Wool
+	Male GenderEnum=iota+1
+	Female
+	Other
 )
-func (material MaterialEnum) ToString() string {
-	return [...]string{"Leather", "Cotton", "Nylon", "Polyester", "Silk", "Wool"}[material-1]
+func (gender GenderEnum) ToString() string {
+	return [...]string{"Male", "Female", "Other"}[gender-1]
 }
 
 type Profile struct {
 	gorm.Model
-	BelongsTo User `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	PreferredColor ColorEnum `gorm:"column:preferred_color"`
-	PreferredMaterial MaterialEnum `gorm:"column:preferred_material"`
+	Name string `gorm:"index"`
+	User User `gorm:"foreignKey:Username;references:Name;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Gender GenderEnum `gorm:"column:gender"`
+	PreferredColor []*Color `gorm:"column:preferred_color"`
+	PreferredMaterial []*Material `gorm:"column:preferred_material"`
+	Phone int32 `gorm:"column:phone"`
 	ArmLength string `gorm:"column:arm_length"`
 	TorsoLength string `gorm:column:torso_length`
 	ShoulderSize string `gorm:"column:shoulder_size"`
@@ -43,3 +30,22 @@ type Profile struct {
 	Allergy string `gorm:"column:allergy"`
 }
 
+func SaveProfile(data interface{}) error {
+	// This is often called during update, and will override any existing records identified by Username
+	db := databases.GetDB()
+	err := db.Save(data).Error
+	return err
+}
+
+func GetProfileByUsername(u string) (Profile, error) {
+	db := databases.GetDB()
+	var profile Profile
+	err := db.First(&profile, "name=?", u).Error
+	return profile, err
+}
+
+func (p *Profile) UpdateProfile(data interface{}) error {
+	db := databases.GetDB()
+	err := db.Model(&p).Updates(data).Error
+	return err
+}
