@@ -8,8 +8,7 @@ import (
 
 func AdminSigninControllers(c *gin.Context) {
 	// Note: the only admins were already assigned by env variables during initial migration step, no new admin may be introduced
-	id := c.PostForm("id")
-	password := c.PostForm("password")
+	admin, password := c.PostForm("id"), c.PostForm("password")
 	if err := processes.DecryptPassword(password, ); err != nil {
 		errorresponders.ContextJSON(c, "wrong password")
 		return

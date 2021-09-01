@@ -19,10 +19,11 @@ type Profile struct {
 	gorm.Model
 	Name string `gorm:"index"`
 	User User `gorm:"foreignKey:Username;references:Name;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	ShippingAddress string `gorm:shipping_address`
 	Gender GenderEnum `gorm:"column:gender"`
 	PreferredColor []*Color `gorm:"column:preferred_color"`
 	PreferredMaterial []*Material `gorm:"column:preferred_material"`
-	Phone int32 `gorm:"column:phone"`
+	Phone string `gorm:"column:phone"`
 	ArmLength string `gorm:"column:arm_length"`
 	TorsoLength string `gorm:column:torso_length`
 	ShoulderSize string `gorm:"column:shoulder_size"`

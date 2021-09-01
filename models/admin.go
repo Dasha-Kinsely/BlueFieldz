@@ -1,6 +1,10 @@
 package models
 
 type Admin struct {
-	ID string `gorm:column:id`
+	AdminID string `gorm:column:id;primaryKey`
 	Password string `gorm:"column:password"`
+}
+
+func FindOneAdmin(id string) {
+
 }
